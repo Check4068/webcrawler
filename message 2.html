@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>我的订单</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+
+
+    <link th:href="@{/messageCSS/amazeui.css}" rel="stylesheet">
+    <link th:href="@{/messageCSS/app.css}" rel="stylesheet">
+
+
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+</head>
+
+<body>
+<div th:replace="~{commons/bar::topbar}"></div>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div th:replace="~{commons/bar::#sidebar(activeUri='myOrder')}"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+            </div>
+
+
+            <ul class="am-list am-list-static am-list-border am-text-sm am-list-hover">
+                <li style="background: #F5f6FA;border-left: 4px solid #6d7781;">留言记录</li>
+                <li class="am-text-gray" th:each="message:${messages}">
+                    <div class="am-g" >
+                        <div class="am-u-sm-1">
+                            <img src="/img/custom.ico" alt=""
+                                 class="am-comment-avatar" width="48" height="48">
+                        </div>
+                        <div class="am-u-sm-11" >
+                            <div class="am-block">
+                                <p th:if="${message.userId != userId}">
+                                    <span class="pt-text-explode">您的留言: </span>[[${message.messageContent}]]
+                                </p>
+                                <p th:if="${message.userId == userId}">
+                                        <span class="pt-text-explode" >对方留言: </span>[[${message.messageContent}]]
+                                </p>
+                            </div>
+                            <div class="am-block"><input  type="text" th:value = "${#dates.format(message.createDate,'yyyy-MM-dd HH:mm')}"></div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+
+            <ul class="am-list am-list-static am-list-border am-text-sm">
+                <li style="background: #F5f6FA;border-left: 4px solid #6d7781;">发送留言</li>
+                <li>
+                    <div class="am-g am-g-collapse">
+                        <div class="am-u-lg-8">
+                            <form th:action="@{'/myOrder/message/'+${orderId}}" class="am-form" method="POST" data-am-validator>
+                                <input type="hidden" name="userId" th:value="${userId}"/>
+
+                                <div class="am-form-group pt-reply-content">
+                                    <label for="">回复内容</label>
+                                    <textarea name="content" rows="5" style="resize:none;width:600px;height:200px;"></textarea>
+                                </div>
+                                <button type="submit" id="btn-submit" class="am-btn am-btn-primary am-btn-xs"
+                                        data-am-loading="{spinner: 'circle-o-notch', loadingText: '提交中...', resetText: '再次提交'}">
+                                    提交
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+
+
+
+
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="js/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+<script type="text/javascript" src="js/popper.min.js" th:src="@{/webjars/popper.js/1.11.1/dist/popper.js}"></script>
+<script type="text/javascript" src="js/bootstrap.min.js" th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
+
+<!-- Icons -->
+<script type="text/javascript" src="js/feather.min.js" th:src="@{/asserts/js/feather.min.js}"></script>
+<script>
+    feather.replace()
+</script>
+
+<!-- Graphs -->
+
+
+</body>
+
+</html>

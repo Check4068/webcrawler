@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>留言簿</title>
+    <link rel="stylesheet" type= "text/css" href="">
+
+    <style type="text/css">
+        body {
+            margin:0;
+            padding:0;
+            color:#000E41;
+            background-color:#004080;
+        }
+
+        h1 {
+            padding:0 lem;
+            color:#FFFFFF;
+        }
+
+        #main {
+            padding:0;
+        }
+
+        #form-area {
+            padding:0.5em 2em;
+            background-color:#78B8F8;
+        }
+
+        #entries-area {
+            padding:0.5em 2em;
+            background-color:#FFFFFF;
+        }
+
+        .entry p {
+            padding:0.5em 1em;
+            background-color:#DBDBFF;
+        }
+    </style>
+
+</head>
+<body>
+<div id="main">
+    <h1>留言簿</h1>
+
+    <div id="entries-area">
+        <h2>留言历史信息</h2>
+
+        <div th:each="message:${messages}">
+            <div th:text="${message.messageContent}"></div>
+        </div>
+    </div>
+
+    <div id="form-area">
+        <p>请尽情留言吧:</p>
+
+        <form th:action="@{'/myOrder/message/'+${orderId}}"  method="post">
+            <table>
+                <tr>
+                    <th>内容</th>
+                    <td>
+                        <textarea rows="5" cols="40" name="content"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <p>
+                <button type="submit" class="btn btn-primary">提交</button>
+            </p>
+        </form>
+    </div>
+
+</div>
+
+
+
+<script type="text/javascript" src="js/jquery-3.2.1.slim.min.js" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+<script type="text/javascript" src="js/popper.min.js" th:src="@{/webjars/popper.js/1.11.1/dist/popper.js}"></script>
+<script type="text/javascript" src="js/bootstrap.min.js" th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.js}"></script>
+
+<!-- Icons -->
+<script type="text/javascript" src="js/feather.min.js" th:src="@{/asserts/js/feather.min.js}"></script>
+
+<script type="text/javascript">
+    function load() {
+
+    }
+</script>
+
+
+</body>
+</html>
